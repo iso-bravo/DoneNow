@@ -22,11 +22,7 @@ public class UserService {
     }
 
     public boolean validateUser(String username, String password) {
-        Optional<User> userOpt = userRepository.findByUsername(username);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            return user.getPassword().equals(password);
-        }
-        return false;
+        return userRepository.findByUsernameAndPassword(username, password).isPresent();
+
     }
 }
