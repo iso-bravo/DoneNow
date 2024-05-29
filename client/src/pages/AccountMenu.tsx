@@ -7,7 +7,8 @@ export function AccountMenu() {
   
   const login = async () => {
     try{
-      const response = await fetch("http://localhost:3000/login/user", {
+      const response = await fetch("http://localhost:3000/login", {
+        mode: "no-cors",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
