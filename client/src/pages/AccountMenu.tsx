@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 export function AccountMenu() {
   const navigate = useNavigate();
   const [variant, setVariant] = useState("login");
-  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,18 +32,22 @@ export function AccountMenu() {
 
   const register = async () => {
     try {
-      const userData = {
-        name,
+      const user = {
         username,
         password,
       };
 
-      const response = await axios.post("http://localhost:3000/users/register", userData);
+      const response = await axios.post("http://localhost:3000/users/register", user);
 
-      console.log(response.data);
+      if (response.status === 200) {
+        toast.success("Successfully registered");
+
+      } else {
+        toast.error("Failed to register");
+      }
     } catch (error) {
       console.error("Error en el registro:", error);
-      toast.error("Error en el registro");
+      toast.error("Failed to register");
     }
   };
 
@@ -64,16 +67,6 @@ export function AccountMenu() {
             : "Create an account"}
         </h2>
         <div className="flex flex-col gap-4 ">
-          {variant === "register" && (
-            <input
-              id="name"
-              type="name"
-              style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
-              className="rounded-2xl text-white text-xl py-2 px-3 w-full placeholder-white placeholder-opacity-80"
-              placeholder="Name"
-              onChange={(e) => setName(e.target.value)}
-            />
-          )}
           <input
             id="username"
             type="username"
