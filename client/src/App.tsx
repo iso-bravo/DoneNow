@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
-import Task from "./components/Task.tsx";
-import CreateTask from "./components/CreateTask.tsx";
+import Task from "./components/Task";
+import CreateTask from "./components/CreateTask";
 import { Modal } from "flowbite-react";
 import { CiLogout } from "react-icons/ci";
-import './App.css'
+import './App.css';
 
 export interface ITask {
   task_id: number;
@@ -12,7 +13,10 @@ export interface ITask {
   description: string;
   due_date: string;
 }
+
 export default function App() {
+  const location = useLocation();
+  const username = location.state?.username || "Guest";
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [openModal, setOpenModal] = useState(false);
   
@@ -26,14 +30,11 @@ export default function App() {
     fetchTasks();
   }, []);
 
-  
-
   return (
     <div className={`font-Lexend bg-custom min-h-screen min-w-full ${openModal ? 'brightness-50' : ''}`}>
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Body>
-          {" "}
-          <CreateTask />{" "}
+          <CreateTask />
         </Modal.Body>
       </Modal>
       <div className="flex flex-row justify-between flex-wrap items-center p-4 md:p-10 font-bold">
@@ -47,11 +48,12 @@ export default function App() {
             <span className="hidden md:block">Create task</span>
           </button>
         </div>
-        <h2 className="text-white text-lg md:text-2xl">Welcome back Shago!</h2>
+        <h2 className="text-white text-lg md:text-2xl">Welcome back {username}!</h2>
       </div>
       <div className="flex-grow flex-row rounded-2xl bg-[#454545] m-4 md:m-8 space-y-4 md:space-y-6 p-2 md:p-5 overflow-y-auto">
         {tasks.map((task) => (
           <Task
+            key={task.task_id}
             task_id={task.task_id}
             title={task.title}
             description={task.description}
@@ -61,12 +63,11 @@ export default function App() {
       </div>
       <div className="flex justify-center items-end">
         <button
-          className="flex flex-row bg-white hover:hover:bg-[#1ED947] hover:text-white transition-all duration-300 rounded-full p-2 md:p-4 items-center">
-          <CiLogout></CiLogout> 
+          className="flex flex-row bg-white hover:bg-[#1ED947] hover:text-white transition-all duration-300 rounded-full p-2 md:p-4 items-center">
+          <CiLogout />
           Log Out
         </button>
       </div>
     </div>
-    
   );
 }
