@@ -39,7 +39,7 @@ export default function CreateTask({ onTaskCreated }: CreateTaskProps) {
       }
     } catch (error) {
       console.error("Error creating task:", error);
-      toast.error("Failed to save task");
+      toast.error("Failed to save task. All fields needed");
     }
   };
 

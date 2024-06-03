@@ -69,7 +69,7 @@ public class TaskController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("edit/{id}")
     public ResponseEntity<Task> editTask(@PathVariable Long id, @RequestBody Task task) {
         if (task.getTitle() == null || task.getTitle().isEmpty() || task.getDescription() == null || task.getDescription().isEmpty()) {
             return ResponseEntity.badRequest().build();
