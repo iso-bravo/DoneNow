@@ -16,10 +16,11 @@ export function AccountMenu() {
         username,
         password
       });
-
+  
       if (response.status === 200 && response.data) {
         console.log("Login successful");
-        navigate("/dashboard", { state: { username } });
+        const { userId, username } = response.data;
+        navigate("/dashboard", { state: { userId, username } });
       } else {
         console.error("Login failed: Invalid credentials");
         toast.error("Username or password invalid");
@@ -29,6 +30,7 @@ export function AccountMenu() {
       toast.error("Username or password invalid");
     }
   };
+  
 
   const register = async () => {
     try {

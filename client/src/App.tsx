@@ -6,6 +6,7 @@ import CreateTask from "./components/CreateTask";
 import { Modal } from "flowbite-react";
 import { CiLogout } from "react-icons/ci";
 import './App.css';
+import axios from "axios";
 
 export interface ITask {
   task_id: number;
@@ -17,18 +18,28 @@ export interface ITask {
 export default function App() {
   const location = useLocation();
   const username = location.state?.username || "Guest";
+  const userId = location.state?.userId;
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [openModal, setOpenModal] = useState(false);
-  
+
   const fetchTasks = async () => {
-    const response = await fetch("http://localhost:3000");
-    const data = await response.json();
-    setTasks(data.tasks);
+    console.log(userId)
+    try {
+      await axios
+      .get(`http://localhost:3000/tasks/user/${userId}`)
+      .then((response) => {
+        setTasks(response.data);
+      });
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    if (userId) {
+      fetchTasks();
+    }
+  }, [userId]);
 
   return (
     <div className={`font-Lexend bg-custom min-h-screen min-w-full ${openModal ? 'brightness-50' : ''}`}>
