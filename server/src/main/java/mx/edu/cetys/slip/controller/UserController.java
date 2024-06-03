@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -37,13 +39,17 @@ public class UserController {
     }
 
     public record LoginRequest(String username, String password){};
+
     @PostMapping("/login")
-    public ResponseEntity<Boolean> validateUser(@RequestBody LoginRequest loginRequest ) {
-        boolean isValid = userService.validateUser(loginRequest.username(), loginRequest.password());
-        if (isValid) {
-            return ResponseEntity.ok(true);
+    public ResponseEntity<?> validateUser(@RequestBody LoginRequest loginRequest ) {
+        Optional<User> user = userService.validateUser(loginRequest.username(), loginRequest.password());
+        if (user.isPresent()) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("userId", user.get().getId());
+            response.put("username", user.get().getUsername());
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(401).body(false);
+            return ResponseEntity.status(401).body("Invalid credentials");
         }
     }
 }

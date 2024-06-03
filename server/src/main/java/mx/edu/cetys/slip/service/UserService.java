@@ -21,8 +21,11 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public boolean validateUser(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password).isPresent();
+    public Optional<User> validateUser(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
 
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 }
