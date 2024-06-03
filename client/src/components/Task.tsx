@@ -1,24 +1,29 @@
+import axios from "axios";
 import { useState } from "react";
 import { BsCheckCircle } from "react-icons/bs";
 import { ITask } from "../App";
 
-const Task: React.FC<ITask> = ({ task_id, title, description, dueDate }) => {
+interface TaskProps extends ITask {
+  onDelete: (taskId: number) => void;
+}
+
+const Task: React.FC<TaskProps> = ({ taskId, title, description, dueDate, onDelete }) => {
   const [showComponent, setShowComponent] = useState(false);
   const [completed, setCompleted] = useState(false);
 
   const handleComplete = async () => {
-    setCompleted(!completed);
-    
-    try{
-      await fetch(`http://localhost:3000/delete/task/${task_id}`, {
-        method: "DELETE",
-        
-    });
-    
+    console.log(taskId);
+    try {
+      await axios.delete(`http://localhost:3000/tasks/delete/${taskId}`);
+      setCompleted(true);
+      setTimeout(() => {
+        onDelete(taskId);
+      }, 1000);
     } catch (error) {
-      console.log("Error at deleting task", error);
+      console.error("Error deleting tasks:", error);
     }
   };
+
   const formattedDueDate = new Date(dueDate).toLocaleDateString();
   return (
     <div

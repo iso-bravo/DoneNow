@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
-import Task from "./components/Task";
-import CreateTask from "./components/CreateTask";
-import { Modal } from "flowbite-react";
-import { CiLogout } from "react-icons/ci";
-import './App.css';
 import axios from "axios";
+import { Modal } from "flowbite-react";
+import { useEffect, useState } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
+import { CiLogout } from "react-icons/ci";
+import { useLocation } from "react-router-dom";
+import './App.css';
+import CreateTask from "./components/CreateTask";
+import Task from "./components/Task";
 
 export interface ITask {
-  task_id: number;
+  taskId: number;
   title: string;
   description: string;
   dueDate: string;
@@ -23,13 +23,11 @@ export default function App() {
   const [openModal, setOpenModal] = useState(false);
 
   const fetchTasks = async () => {
-    console.log(userId)
+    console.log(userId);
     try {
-      await axios.get(`http://localhost:3000/tasks/user/${userId}`)
-      .then((response) => {
-        setTasks(response.data);
-        console.log(response.data);
-      });
+      const response = await axios.get(`http://localhost:3000/tasks/user/${userId}`);
+      setTasks(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
@@ -42,6 +40,10 @@ export default function App() {
   const handleTaskCreated = (newTask: ITask) => {
     setTasks([...tasks, newTask]);
     setOpenModal(false);
+  };
+
+  const handleTaskDeleted = (taskId: number) => {
+    setTasks(tasks.filter((task) => task.taskId !== taskId));
   };
 
   return (
@@ -74,7 +76,7 @@ export default function App() {
       </div>
       <div className="flex-grow flex-row rounded-2xl bg-[#454545] m-4 md:m-8 space-y-4 md:space-y-6 p-2 md:p-5 overflow-y-auto">
         {tasks.map((task) => (
-          <Task key={task.task_id} {...task} />
+          <Task key={task.taskId} {...task} onDelete={handleTaskDeleted} />
         ))}
       </div>
     </div>

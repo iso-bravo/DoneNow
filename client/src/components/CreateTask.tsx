@@ -5,10 +5,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface ITask {
-  task_id: number;
+  taskId: number;
   title: string;
   description: string;
-  due_date: string;
+  dueDate: string;
 }
 interface CreateTaskProps {
   onTaskCreated: (task: ITask) => void;
