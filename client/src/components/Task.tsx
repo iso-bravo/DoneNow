@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BsCheckCircle } from "react-icons/bs";
 import { ITask } from "../App";
 
-const Task: React.FC<ITask> = ({ task_id, title, description, due_date }) => {
+const Task: React.FC<ITask> = ({ task_id, title, description, dueDate }) => {
   const [showComponent, setShowComponent] = useState(false);
   const [completed, setCompleted] = useState(false);
 
@@ -19,7 +19,7 @@ const Task: React.FC<ITask> = ({ task_id, title, description, due_date }) => {
       console.log("Error at deleting task", error);
     }
   };
-  const formattedDueDate = new Date(due_date).toLocaleDateString();
+  const formattedDueDate = new Date(dueDate).toLocaleDateString();
   return (
     <div
       className={`m-8 rounded-lg font-Lexend transition-all duration-300 relative ${

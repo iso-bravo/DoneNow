@@ -12,7 +12,7 @@ export interface ITask {
   task_id: number;
   title: string;
   description: string;
-  due_date: string;
+  dueDate: string;
 }
 
 export default function App() {
