@@ -63,11 +63,11 @@ const EditTask: React.FC<EditTaskProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3">
+     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <ToastContainer />
-      <div className="bg-gray-600 w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/4 rounded-xl">
-        <div className="flex flex-col gap-4 mx-8">
-          <h1 className="text-white text-3xl font-bold text-center py-8">
+      <div className="bg-gray-600 w-full sm:w-3/4 md:w-2/3 lg:w-1/3 xl:w-2/6 rounded-xl p-8">
+        <div className="flex flex-col gap-4">
+          <h1 className="text-white text-3xl font-bold text-center">
             Edit Task
           </h1>
           <input
@@ -99,7 +99,7 @@ const EditTask: React.FC<EditTaskProps> = ({
           />
         </div>
         <div className="flex justify-center">
-        <button
+          <button
             className="bg-transparent border border-gray-300 py-3 px-10 text-gray-300 rounded-md mt-10 hover:bg-gray-500 hover:text-white transition-all duration-300 m-5"
             onClick={onCancel}
           >

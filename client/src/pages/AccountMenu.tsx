@@ -49,7 +49,7 @@ export function AccountMenu() {
       }
     } catch (error) {
       console.error("Error en el registro:", error);
-      toast.error("Failed to register");
+      toast.error("User already exists");
     }
   };
 

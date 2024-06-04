@@ -27,7 +27,7 @@ const Task: React.FC<TaskProps> = ({ taskId, title, description, dueDate, onDele
   };
 
   const handleEditClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation(); // Evita que el evento de clic se propague al contenedor de Task
+    e.stopPropagation();
     onEdit({ taskId, title, description, dueDate });
     setEditing(true);
   };
@@ -55,20 +55,18 @@ const Task: React.FC<TaskProps> = ({ taskId, title, description, dueDate, onDele
           Due date: {formattedDueDate}
         </div>
       </div>
-      {/* Botón de edición */}
       <div className="absolute top-2 right-2"
       >
         <button
           className="px-2 py-3 text-white"
           onClick={(e) => {
-            e.stopPropagation(); // Evita que el evento de clic se propague al contenedor de Task
+            e.stopPropagation();
             handleEditClick(e);
           }}
         >
           <BsPencil size={20} />
         </button>
       </div>
-      {/* Muestra el componente EditTask si está en modo de edición */}
       {editing && (
         <EditTask
           taskId={taskId}
@@ -78,11 +76,10 @@ const Task: React.FC<TaskProps> = ({ taskId, title, description, dueDate, onDele
           onCancel={() => setEditing(false)}
           onTaskUpdated={(updatedTask) => {
             setEditing(false);
-            // Handle task updated if needed
           }}
         />
       )}
-      {/* Muestra el componente de check cuando se pasa el mouse sobre el Task */}
+
       {showComponent && (
         <div>
         <div className="absolute inset-0 flex items-center justify-center" onClick={handleComplete}>
@@ -93,7 +90,7 @@ const Task: React.FC<TaskProps> = ({ taskId, title, description, dueDate, onDele
           <button
             className="px-2 py-3 text-white"
             onClick={(e) => {
-              e.stopPropagation(); // Evita que el evento de clic se propague al contenedor de Task
+              e.stopPropagation();
               handleEditClick(e);
             }}
           >
